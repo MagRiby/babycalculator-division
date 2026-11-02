@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Generate Kawaii Icon</title>
+</head>
+<body>
+<canvas id="c" width="180" height="180"></canvas>
+<script>
+const c = document.getElementById('c');
+const ctx = c.getContext('2d');
+
+// Pastel Background
+const bg = ctx.createLinearGradient(0, 0, 180, 180);
+bg.addColorStop(0, '#ffe6f2');
+bg.addColorStop(0.5, '#f3e8ff');
+bg.addColorStop(1, '#e4fbf7');
+ctx.fillStyle = bg;
+ctx.beginPath();
+ctx.roundRect(0, 0, 180, 180, 40);
+ctx.fill();
+
+// Border
+ctx.strokeStyle = '#ffb3d1';
+ctx.lineWidth = 4;
+ctx.beginPath();
+ctx.roundRect(6, 6, 168, 168, 35);
+ctx.stroke();
+
+// Bunny Head
+ctx.fillStyle = '#ffffff';
+ctx.strokeStyle = '#ff9ec4';
+ctx.lineWidth = 3.5;
+ctx.beginPath();
+ctx.roundRect(46, 44, 88, 66, 33);
+ctx.fill();
+ctx.stroke();
+
+// Eyes
+ctx.fillStyle = '#4a304d';
+ctx.beginPath(); ctx.arc(73, 73, 8, 0, Math.PI * 2); ctx.fill();
+ctx.beginPath(); ctx.arc(107, 73, 8, 0, Math.PI * 2); ctx.fill();
+ctx.fillStyle = '#ffffff';
+ctx.beginPath(); ctx.arc(70.5, 70.5, 2.8, 0, Math.PI * 2); ctx.fill();
+ctx.beginPath(); ctx.arc(104.5, 70.5, 2.8, 0, Math.PI * 2); ctx.fill();
+
+// Blush
+ctx.fillStyle = 'rgba(255, 158, 196, 0.75)';
+ctx.beginPath(); ctx.ellipse(60, 83, 8, 4.5, 0, 0, Math.PI * 2); ctx.fill();
+ctx.beginPath(); ctx.ellipse(120, 83, 8, 4.5, 0, 0, Math.PI * 2); ctx.fill();
+
+// Mouth
+ctx.strokeStyle = '#e85d96';
+ctx.lineWidth = 3;
+ctx.lineCap = 'round';
+ctx.beginPath(); ctx.moveTo(82, 83); ctx.quadraticCurveTo(90, 92, 98, 83); ctx.stroke();
+
+// ÷ symbol
+ctx.font = 'bold 48px "Arial Rounded MT Bold", "Arial Black", sans-serif';
+ctx.textAlign = 'center';
+const tg = ctx.createLinearGradient(70, 115, 110, 155);
+tg.addColorStop(0, '#ff75ad');
+tg.addColorStop(1, '#b589ff');
+ctx.fillStyle = tg;
+ctx.fillText('÷', 90, 150);
+
+const a = document.createElement('a');
+a.download = 'icon.png';
+a.href = c.toDataURL('image/png');
+a.textContent = 'Download icon.png';
+a.style.cssText = 'display:block;margin:20px;font-size:20px;color:#e85d96;font-family:sans-serif';
+document.body.appendChild(a);
+</script>
+</body>
+</html>

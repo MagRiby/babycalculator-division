@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>RoboDiv Party! 🤖✨</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="icon.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="RoboDiv">
+    <meta name="theme-color" content="#ff9ebb">
+</head>
+<body>
+    <!-- Floating background decorations -->
+    <div class="bg-decorations" aria-hidden="true">
+        <span class="floating-deco d1">🤖</span>
+        <span class="floating-deco d2">✨</span>
+        <span class="floating-deco d3">⚡</span>
+        <span class="floating-deco d4">🌈</span>
+        <span class="floating-deco d5">💎</span>
+        <span class="floating-deco d6">⭐</span>
+    </div>
+
+    <button id="toggleHistoryBtn" class="history-toggle-btn" title="Historique des scores" aria-label="Historique des scores">📊</button>
+
+    <div class="container">
+        <div class="corner-decor tl">✨</div>
+        <div class="corner-decor tr">⚡</div>
+        <div class="corner-decor bl">⚡</div>
+        <div class="corner-decor br">✨</div>
+        
+        <div class="logo">★ ROBO DIVISION ★</div>
+
+        <!-- Cute Pastel Robot Mascot -->
+        <div class="robot" id="robot">
+            <div class="robot-antenna"></div>
+            <div class="robot-head">
+                <div class="robot-bolt left"></div>
+                <div class="robot-bolt right"></div>
+                <div class="robot-screen">
+                    <div class="robot-eye left"></div>
+                    <div class="robot-eye right"></div>
+                    <div class="mascot-blush left"></div>
+                    <div class="mascot-blush right"></div>
+                    <div class="robot-mouth"></div>
+                </div>
+            </div>
+        </div>
+
+        <h1>Division Party!</h1>
+        
+        <div id="settings" class="settings">
+            <div class="settings-row">
+                <label for="maxNumber">Tables (1 à 12) jusqu'à :
+                    <select id="maxNumber">
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12" selected>12</option>
+                    </select>
+                </label>
+                <div class="round-select">
+                    <button class="btn btn-round selected" data-rounds="10">10 questions</button>
+                    <button class="btn btn-round" data-rounds="20">20 questions</button>
+                </div>
+            </div>
+
+            <button id="startBtn" class="btn btn-start">C'est parti ! ✨</button>
+            
+            <div class="mode-divider">— ou choisis ta table —</div>
+            
+            <div class="challenge-mode-section">
+                <div class="challenge-mode-title">🎯 Mode Défi (Tables 1 à 12)</div>
+                <div class="challenge-table-buttons">
+                    <button class="btn btn-table" data-table="1">÷ 1</button>
+                    <button class="btn btn-table" data-table="2">÷ 2</button>
+                    <button class="btn btn-table" data-table="3">÷ 3</button>
+                    <button class="btn btn-table" data-table="4">÷ 4</button>
+                    <button class="btn btn-table" data-table="5">÷ 5</button>
+                    <button class="btn btn-table" data-table="6">÷ 6</button>
+                    <button class="btn btn-table" data-table="7">÷ 7</button>
+                    <button class="btn btn-table" data-table="8">÷ 8</button>
+                    <button class="btn btn-table" data-table="9">÷ 9</button>
+                    <button class="btn btn-table" data-table="10">÷ 10</button>
+                    <button class="btn btn-table" data-table="11">÷ 11</button>
+                    <button class="btn btn-table" data-table="12">÷ 12</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="game" class="game hidden">
+            <div class="score-board">
+                <span class="score-pill">⭐ Score : <span id="score">0</span></span>
+                <span id="questionCounter" class="question-counter hidden">🌸 <span id="currentQ">1</span>/<span id="totalQ">10</span></span>
+                <span class="streak-pill">🔥 Série : <span id="streak">0</span></span>
+            </div>
+            
+            <div id="globalTimerBar" class="global-timer-bar hidden">
+                <div class="global-timer-fill" id="globalTimerFill"></div>
+                <span class="global-timer-text" id="globalTimerText">1:30</span>
+            </div>
+            
+            <div id="challengeModeLabel" class="challenge-mode-label hidden">🎯 Défi : Table de ÷<span id="challengeTableNum">6</span></div>
+            
+            <div class="side-panels">
+                <div class="mastered-panel" id="masteredPanel">
+                    <div class="mastered-header">✅ Maîtrisé (<span id="masteredCount">0</span>/<span id="masteredTotal">12</span>)</div>
+                    <div class="mastered-list" id="masteredList"></div>
+                </div>
+                <div class="challenges-panel" id="challengesPanel">
+                    <div class="challenges-header">🎯 À revoir</div>
+                    <div class="challenges-list" id="challengesList"></div>
+                </div>
+            </div>
+            
+            <div class="timer-bar">
+                <div class="timer-fill" id="timerFill"></div>
+            </div>
+            
+            <div class="question">
+                <span id="num1">?</span> <span class="div-symbol">÷</span> <span id="num2">?</span> = ?
+            </div>
+            
+            <div id="answerDisplay" class="answer-display empty"></div>
+            
+            <div class="numpad">
+                <button class="num-btn" data-num="1">1</button>
+                <button class="num-btn" data-num="2">2</button>
+                <button class="num-btn" data-num="3">3</button>
+                <button class="num-btn" data-num="4">4</button>
+                <button class="num-btn" data-num="5">5</button>
+                <button class="num-btn" data-num="6">6</button>
+                <button class="num-btn" data-num="7">7</button>
+                <button class="num-btn" data-num="8">8</button>
+                <button class="num-btn" data-num="9">9</button>
+                <button class="num-btn clear" data-action="clear">EFF</button>
+                <button class="num-btn zero" data-num="0">0</button>
+                <button class="num-btn backspace" data-action="back">⌫</button>
+            </div>
+            
+            <div id="feedback" class="feedback"></div>
+            
+            <button id="submitBtn" class="btn btn-submit">Vérifier ! 💖</button>
+            
+            <button id="newGameBtn" class="btn btn-new hidden">Nouvelle Partie 🌸</button>
+            <button id="backBtn" class="btn btn-back">⬅ Menu</button>
+        </div>
+        
+        <div id="endScreen" class="end-screen hidden">
+            <div class="end-title" id="endTitle">Partie terminée !</div>
+            <div class="end-stats">
+                <div class="end-stat">
+                    <span class="end-stat-label">⭐ Score</span>
+                    <span class="end-stat-value" id="endScore">0</span>
+                </div>
+                <div class="end-stat">
+                    <span class="end-stat-label">✅ Bonnes réponses</span>
+                    <span class="end-stat-value" id="endCorrect">0/10</span>
+                </div>
+                <div class="end-stat">
+                    <span class="end-stat-label">🔥 Meilleure série</span>
+                    <span class="end-stat-value" id="endStreak">🔥 0</span>
+                </div>
+            </div>
+            <div class="end-stars" id="endStars"></div>
+            <button id="replayBtn" class="btn btn-start">Rejouer ✨</button>
+            <button id="endMenuBtn" class="btn btn-back">⬅ Menu</button>
+        </div>
+    </div>
+    
+    <div class="history-panel hidden" id="historyPanel">
+        <div class="history-header">
+            <span>📊 Historique & Suivi</span>
+            <button id="closeHistoryBtn" class="close-history-btn" aria-label="Fermer">✕</button>
+        </div>
+        <div class="history-list" id="historyList"></div>
+    </div>
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>
