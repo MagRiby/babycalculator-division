@@ -1,5 +1,5 @@
 // === App Version - increment to force refresh on mobile ===
-const APP_VERSION = '3';
+const APP_VERSION = '4';
 const storedVersion = localStorage.getItem('kawaii_div_version');
 if (storedVersion && storedVersion !== APP_VERSION) {
     localStorage.setItem('kawaii_div_version', APP_VERSION);
@@ -507,29 +507,24 @@ function startGame() {
     generateQuestion();
 }
 
-// Build valid exact divisions where dividend (n1) is NEVER above maxLimit (max 12)
+// Build valid exact divisions where divisor (n2, second number) is 1..maxLimit (max 12)
 function getNormalPool(maxLimit) {
     const cap = Math.min(maxLimit, 12);
     const pool = [];
-    for (let n1 = 1; n1 <= cap; n1++) {
-        for (let n2 = 1; n2 <= n1; n2++) {
-            if (n1 % n2 === 0) {
-                pool.push({ n1, n2, answer: n1 / n2 });
-            }
+    for (let n2 = 1; n2 <= cap; n2++) {
+        for (let quotient = 1; quotient <= cap; quotient++) {
+            pool.push({ n1: n2 * quotient, n2, answer: quotient });
         }
     }
     return pool;
 }
 
-// Build challenge pool for a given table (1..12) where no number ever exceeds 12
+// Build challenge pool for a given divisor table (1..12), quotients 1..12
 function getChallengePool(tableNum) {
     const pool = [];
-    for (let n1 = 1; n1 <= 12; n1++) {
-        for (let n2 = 1; n2 <= n1; n2++) {
-            if (n1 % n2 === 0 && (n2 === tableNum || n1 === tableNum)) {
-                pool.push({ n1, n2, answer: n1 / n2, key: `${n1}÷${n2}` });
-            }
-        }
+    for (let quotient = 1; quotient <= 12; quotient++) {
+        const n1 = tableNum * quotient;
+        pool.push({ n1, n2: tableNum, answer: quotient, key: `${n1}÷${tableNum}` });
     }
     return pool;
 }
